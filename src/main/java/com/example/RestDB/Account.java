@@ -9,9 +9,9 @@ import javax.persistence.Table;
 @Table(name="account", schema = "abconline")
 public class Account {
     @Id
-    private String accountId;
+    private String accountId; // ACCOUNT_ID
 
-    private String accountName;
+    private String accountName; // ACCOUNT_NAME
 
     public Account() {
         super();

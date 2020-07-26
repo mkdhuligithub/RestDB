@@ -1,6 +1,8 @@
 package com.example.RestDB;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +38,13 @@ public class AccountController {
         acc.setAccountName(account.getAccountName());
         Account updAccount = accountRepository.save(acc);
         return updAccount;
+    }
+
+    @DeleteMapping("accounts/{accountId}") // DELETE operation for CRUD
+    public ResponseEntity<Void> deleteAccount(@PathVariable("accountId") String accountId) throws AccountNotFoundException {
+        Account acc = accountRepository.findById(accountId).orElseThrow(()->new AccountNotFoundException(accountId));
+        accountRepository.deleteById(accountId);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }
