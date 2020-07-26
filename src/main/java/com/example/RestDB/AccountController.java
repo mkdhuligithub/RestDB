@@ -28,4 +28,14 @@ public class AccountController {
     public @Valid Account createEmployee(@Valid @RequestBody Account account) {
         return accountRepository.save(account);
     }
+
+    @PutMapping("/accounts/{accountId}") // UPDATE operation for CRUD
+    public @Valid Account updateAccount(@PathVariable(value="accountId") String accountId, @Valid @RequestBody Account account)
+            throws AccountNotFoundException {
+        Account acc = accountRepository.findById(accountId).orElseThrow(()->new AccountNotFoundException(accountId));
+        acc.setAccountName(account.getAccountName());
+        Account updAccount = accountRepository.save(acc);
+        return updAccount;
+    }
+
 }
